@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
       <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
         <img
           className="object-cover object-center h-full w-full"
-          src={product.image}
+          src={product.image.url}
           alt="product image"
         />
       </div>
