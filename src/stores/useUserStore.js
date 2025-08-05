@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
-import { AArrowDown } from "lucide-react";
 
 export const useUserStore = create((set, get) => ({
   user: null,
@@ -25,7 +24,7 @@ export const useUserStore = create((set, get) => ({
       return;
     }
     try {
-      const res = await axios.post("auth/signup", {
+      const res = await axios.post("/auth/signup", {
         name,
         email,
         password,
@@ -43,26 +42,27 @@ export const useUserStore = create((set, get) => ({
   login: async (email, password) => {
     set({ loading: true });
     try {
-      const res = await axios.post("auth/login", {
+      const res = await axios.post("/auth/login", {
         email,
         password,
       });
+      console.log(res);
       set({ user: res.data.user, loading: false });
       toast.success("Login successful");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message || "Something went wrong");
+      toast.error(error.response.data.message + "Something went wrong");
       set({ loading: false });
     }
   },
   checkAuth: async () => {
     try {
       set({ checkinginAuth: true });
-      const res = await axios.get("auth/profile");
+      const res = await axios.get("/auth/profile");
+
       set({ user: res.data.user, checkinginAuth: false });
     } catch (err) {
       console.log(err);
-      toast.error("Please log in to continue", { id: "login" });
       set({ user: null, checkinginAuth: false });
       get().redirect("/login");
     }
@@ -70,7 +70,7 @@ export const useUserStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await axios.post("auth/logout");
+      await axios.post("/auth/logout");
       set({ user: null });
     } catch (error) {
       console.log(error);

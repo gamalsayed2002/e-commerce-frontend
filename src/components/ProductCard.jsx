@@ -7,7 +7,6 @@ const ProductCard = ({ product }) => {
   const { user } = useUserStore();
   const { addToCart } = useCartStore();
   const handleAddToCart = () => {
-  
     if (!user) {
       toast.error("Please login to add products to cart", { id: "login" });
       return;
@@ -25,7 +24,6 @@ const ProductCard = ({ product }) => {
           src={product.image}
           alt="product image"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-20" />
       </div>
 
       <div className="mt-4 px-5 pb-5">
